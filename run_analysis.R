@@ -12,8 +12,9 @@ if (!require("reshape2")) {
   install.packages("reshape2")
 }
 
-require("data.table")
-require("reshape2")
+library(data.table)
+library(reshape2)
+
 #read the features 
 features <- read.table("./UCI HAR Dataset/features.txt",header = F,stringsAsFactors = F)[,2]
 #import the activity label
@@ -31,35 +32,35 @@ names(X_test)<-features
 X_test<-X_test[,mean_sd_features]
 #import the activity label
 Y_test[,2] <- activity_labels[Y_test[,1]]
-names(Y_test) <- c("Activity_ID", "Activity_Label")
-names(subject_test) <- "subject"
+names(Y_test) <- c("ActivityID", "ActivityLabel")
+names(subject_test) <- "Subject"
 #combine the x_test and y_test
-test_data <- cbind(as.data.table(subject_test), Y_test, X_test)
+DataTest.df <- cbind(as.data.table(subject_test), Y_test, X_test)
 
 X_train <- read.table("./UCI HAR Dataset/train/X_train.txt")
 Y_train <- read.table("./UCI HAR Dataset/train/y_train.txt")
 
 subject_train <- read.table("./UCI HAR Dataset/train/subject_train.txt")
 
-names(X_train) = features
+names(X_train) <- features
 
 #extract the mean and the standard deviation 
-X_train = X_train[,mean_sd_features]
+X_train <- X_train[,mean_sd_features]
 
 #load the activity label
 Y_train[,2] <- activity_labels[Y_train[,1]]
-names(Y_train) <- c("Activity_ID", "Activity_Label")
-names(subject_train) <- "subject"
+names(Y_train) <- c("ActivityID", "ActivityLabel")
+names(subject_train) <- "Subject"
 #combine the x_train and y_train
-train_data <- cbind(as.data.table(subject_train), Y_train, X_train)
+DataTrain.df <- cbind(as.data.table(subject_train), Y_train, X_train)
 
-data <- rbind(test_data, train_data)
+data <- rbind(DataTest.df, DataTrain.df)
 
-id_labels <- c("subject", "Activity_ID", "Activity_Label")
-data_labels <- setdiff(colnames(data), id_labels)
-melt_data <- melt(data, id = id_labels, measure.vars = data_labels)
+IdLabels <- c("Subject", "ActivityID", "ActivityLabel")
+DataLabels <- setdiff(colnames(data), IdLabels)
+mdata <- melt(data, id = IdLabels, measure.vars = DataLabels)
 
 # Apply mean function to dataset using dcast function
-tidy_data <- dcast(melt_data, subject + Activity_Label ~ variable, mean)
+clean_data <- dcast(mdata, Subject + ActivityLabel ~ variable, mean)
 
-write.table(tidy_data, file = "./tidy_data.txt")
+write.table(clean_data, file = "./tidy_data.txt")
