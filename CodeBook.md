@@ -2,11 +2,11 @@ CodeBook
 ===
 This is a code book that describes the variables, the data, and any transformations or work that you performed to 
 clean up the data.
-# The data source
+# Data source
 
     Original data: https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
     Original description of the dataset: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
-# Data Set Information
+# Data Set
 The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person 
 performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone 
 (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration 
@@ -21,9 +21,9 @@ gravity. The gravitational force is assumed to have only low frequency component
 frequency was used. From each window, a vector of features was obtained by calculating variables from the time and frequency
 domain.
 
-# The data
+# Data
 
-The dataset includes the following files:
+The dataset shows the following files:
 
     'README.txt'
 
@@ -41,7 +41,7 @@ The dataset includes the following files:
 
     'test/y_test.txt': Test labels.
 
-The following files are available for the train and test data. Their descriptions are equivalent.
+The following files are the train and test data.
 
     'train/subject_train.txt': Each row identifies the subject who performed the activity for each window sample. Its range 
     is from 1 to 30.
@@ -56,20 +56,4 @@ The following files are available for the train and test data. Their description
     'train/Inertial Signals/body_gyro_x_train.txt': The angular velocity vector measured by the gyroscope for each window 
     sample. The units are radians/second.
 
-Transformation details
 
-There are 5 parts:
-
-    1.Merges the training and the test sets to create one data set.
-    2.Extracts only the measurements on the mean and standard deviation for each measurement.
-    3.Uses descriptive activity names to name the activities in the data set
-    4.Appropriately labels the data set with descriptive activity names.
-    5.Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-# How run_analysis.R implements the above steps:
-
-    Require reshapre2 and data.table librareis.
-    Load both test and train data
-    Load the features and activity labels.
-    Extract the mean and standard deviation column names and data.
-    Process the data. There are two parts processing test and train data respectively.
-    Merge data set.
